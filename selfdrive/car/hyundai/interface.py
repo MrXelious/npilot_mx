@@ -76,7 +76,7 @@ class CarInterface(CarInterfaceBase):
       ret.lateralTuning.torque.ki = 0.2 / max_lat_accel
       ret.lateralTuning.torque.friction = 0.10254237048034251 # 0.0
       ret.lateralTuning.torque.kd = 1.0
-      ret.lateralTuning.torque.steeringAngleDeadzoneDeg = 0.5
+      ret.lateralTuning.torque.steeringAngleDeadzoneDeg = 0.0
 
 
     ret.steerRatio = 16.5
@@ -294,7 +294,7 @@ class CarInterface(CarInterfaceBase):
       ret.centerToFront = ret.wheelbase * 0.4
       ret.steerRatio = 17.25
     elif candidate == CAR.K9:
-      ret.mass = 2005. + STD_CARGO_KG
+      ret.mass = 2075. + STD_CARGO_KG
       ret.wheelbase = 3.15
       ret.centerToFront = ret.wheelbase * 0.4
       tire_stiffness_factor = 0.8
