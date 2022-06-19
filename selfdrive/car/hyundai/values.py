@@ -11,7 +11,7 @@ class CarControllerParams:
     if CP.carFingerprint in HDA2_CAR:
       self.STEER_MAX = 150
     else:
-      self.STEER_MAX = 385
+      self.STEER_MAX = 385 # 408 was cuasing AEB/LKAS/Lock Out on high speed turns. Need to find highest usuable value
 
     self.STEER_DELTA_UP = 3
     self.STEER_DELTA_DOWN = 6
