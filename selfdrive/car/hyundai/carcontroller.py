@@ -137,24 +137,23 @@ class CarController:
 
     cut_steer_temp = False
 
-    if self.steer_fault_max_angle > 0:
-      if lkas_active and abs(CS.out.steeringAngleDeg) > self.steer_fault_max_angle:
-        self.angle_limit_counter += 1
-      else:
-        self.angle_limit_counter = 0
+    if lkas_active and abs(CS.out.steeringAngleDeg) > self.steer_fault_max_angle:
+      self.angle_limit_counter += 1
+    else:
+      self.angle_limit_counter = 0
 
-      # stop requesting torque to avoid 90 degree fault and hold torque with induced temporary fault
-      # two cycles avoids race conditions every few minutes
-      if self.angle_limit_counter > self.steer_fault_max_frames:
-        self.cut_steer = True
-      elif self.cut_steer_frames > 1:
-        self.cut_steer_frames = 0
-        self.cut_steer = False
+    # stop requesting torque to avoid 90 degree fault and hold torque with induced temporary fault
+    # two cycles avoids race conditions every few minutes
+    if self.angle_limit_counter > self.steer_fault_max_frames:
+      self.cut_steer = True
+    elif self.cut_steer_frames > 1:
+      self.cut_steer_frames = 0
+      self.cut_steer = False
 
-      if self.cut_steer:
-        cut_steer_temp = True
-        self.angle_limit_counter = 0
-        self.cut_steer_frames += 1
+    if self.cut_steer:
+      cut_steer_temp = True
+      self.angle_limit_counter = 0
+      self.cut_steer_frames += 1
 
     can_sends = []
     can_sends.append(hyundaican.create_lkas11(self.packer, self.frame, self.CP.carFingerprint, apply_steer, lkas_active,
