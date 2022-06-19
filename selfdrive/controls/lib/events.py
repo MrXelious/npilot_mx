@@ -873,14 +873,19 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.reverseGear: {
-    ET.PERMANENT: Alert(
-      "Reverse\nGear",
-      "",
-      AlertStatus.normal, AlertSize.full,
-      Priority.LOWEST, VisualAlert.none, AudibleAlert.none, .2, creation_delay=0.5),
-    ET.SOFT_DISABLE: SoftDisableAlert("Reverse Gear"),
+    ET.SOFT_DISABLE: user_soft_disable_alert("Reverse Gear"),
     ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
   },
+
+  #EventName.reverseGear: {
+    #ET.PERMANENT: Alert(
+      #"Reverse\nGear",
+      #"",
+      #AlertStatus.normal, AlertSize.small,
+      #Priority.LOWEST, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1),
+    #ET.SOFT_DISABLE: SoftDisableAlert("Reverse Gear"),
+    #ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
+  #},
 
   # On cars that use stock ACC the car can decide to cancel ACC for various reasons.
   # When this happens we can no long control the car so the user needs to be warned immediately.
