@@ -17,7 +17,7 @@ VisualAlert = car.CarControl.HUDControl.VisualAlert
 min_set_speed = 30 * CV.KPH_TO_MS
 
 STEER_FAULT_MAX_ANGLE = 85  # EPS max is 90
-STEER_FAULT_MAX_FRAMES = 90  # EPS counter is 95
+STEER_FAULT_MAX_FRAMES = 85  # EPS counter is 95
 
 def process_hud_alert(enabled, fingerprint, hud_control):
 
@@ -138,7 +138,6 @@ class CarController:
 
     self.lkas11_cnt = (self.lkas11_cnt + 1) % 0x10
 
-    # H90D code - Begin
     if CC.latActive and abs(CS.out.steeringAngleDeg) > STEER_FAULT_MAX_ANGLE:
       self.angle_limit_counter += 1
     else:
@@ -148,7 +147,7 @@ class CarController:
     # two cycles avoids race conditions every few minutes
     if self.angle_limit_counter > STEER_FAULT_MAX_FRAMES:
       self.cut_steer = True
-    elif self.cut_steer_frames > 1:
+    elif self.cut_steer_frames > 0:
       self.cut_steer_frames = 0
       self.cut_steer = False
 
@@ -157,7 +156,6 @@ class CarController:
       cut_steer_temp = True
       self.angle_limit_counter = 0
       self.cut_steer_frames += 1
-    # H90D code - END
 
     can_sends = []
     can_sends.append(hyundaican.create_lkas11(self.packer, self.frame, self.CP.carFingerprint, apply_steer, lkas_active,
