@@ -17,7 +17,7 @@ VisualAlert = car.CarControl.HUDControl.VisualAlert
 min_set_speed = 30 * CV.KPH_TO_MS
 
 STEER_FAULT_MAX_ANGLE = 85  # EPS max is 90
-STEER_FAULT_MAX_FRAMES = 85  # EPS counter is 95
+STEER_FAULT_MAX_FRAMES = 90  # EPS counter is 95
 
 def process_hud_alert(enabled, fingerprint, hud_control):
 
@@ -147,7 +147,7 @@ class CarController:
     # two cycles avoids race conditions every few minutes
     if self.angle_limit_counter > STEER_FAULT_MAX_FRAMES:
       self.cut_steer = True
-    elif self.cut_steer_frames > 0:
+    elif self.cut_steer_frames > 1:
       self.cut_steer_frames = 0
       self.cut_steer = False
 
